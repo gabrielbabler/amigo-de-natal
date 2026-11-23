@@ -142,21 +142,21 @@ export function HeroModeCards() {
 
   return (
     <section className="space-y-6">
-      <div className="space-y-3 text-center">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-red-200 bg-red-50 px-3.5 py-1 text-sm font-bold text-[#DC2626] dark:border-red-900/60 dark:bg-red-950/60 dark:text-red-300">
-          <Gift className="h-4 w-4" />
-          100% grátis para criar e participar • Sem anúncios
+      <div className="space-y-4 text-center">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#e2e7ff] px-4 py-1.5 text-sm font-bold text-[#00652c] shadow-xs dark:bg-slate-800 dark:text-emerald-300">
+          <Gift className="h-4 w-4 text-[#00652c] dark:text-emerald-400" />
+          100% Grátis • Sem anúncios • Sem baixar app
         </span>
-        <h1 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl dark:text-white">
-          Organize sua brincadeira de{" "}
-          <span className="text-[#DC2626] dark:text-red-400">Natal</span> em{" "}
-          <span className="text-[#15803D] dark:text-emerald-400">
-            15 segundos
+        <h1 className="text-3xl font-extrabold tracking-tight text-[#131b2e] sm:text-4xl dark:text-white">
+          O sorteio de{" "}
+          <span className="text-[#bb0112] dark:text-red-400">Natal</span>{" "}
+          <span className="text-[#00652c] dark:text-emerald-400">
+            sem dor de cabeça.
           </span>
         </h1>
-        <p className="text-base text-slate-600 dark:text-slate-300">
-          Escolha a modalidade abaixo, mande o link no grupo do WhatsApp e faça
-          o sorteio de graça. Extras divertidos são totalmente opcionais.
+        <p className="mx-auto max-w-md text-base text-[#3f493f] dark:text-slate-300">
+          Crie o grupo em 15 segundos, mande o link no WhatsApp e faça o sorteio
+          de graça com toda a família.
         </p>
       </div>
 
@@ -170,30 +170,30 @@ export function HeroModeCards() {
               type="button"
               onClick={() => openCreator(mode.id)}
               style={{ animationDelay: `${idx * 90}ms` }}
-              className="animate-gentle-rise group flex min-h-24 w-full items-center justify-between gap-4 rounded-3xl border-2 border-stone-200 bg-white p-5 text-left shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#15803D] hover:shadow-lg active:scale-[0.99] dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-400"
+              className="animate-gentle-rise group flex min-h-24 w-full items-center justify-between gap-4 rounded-2xl border border-[#becabc]/40 bg-white p-5 text-left shadow-[0_2px_12px_rgba(19,27,46,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#00652c] hover:shadow-lg active:scale-[0.99] dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-400"
             >
               <div className="flex items-start gap-4">
                 <span
                   aria-hidden="true"
-                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-3xl transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3 dark:bg-emerald-950/60"
+                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#f2f3ff] text-3xl transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3 dark:bg-emerald-950/60"
                 >
                   {mode.emoji}
                 </span>
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">
+                    <h2 className="text-xl font-extrabold text-[#131b2e] dark:text-white">
                       {mode.title}
                     </h2>
-                    <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-[#15803D] dark:bg-emerald-950 dark:text-emerald-300">
+                    <span className="rounded-full bg-[#d3ffd5] px-2.5 py-0.5 text-xs font-bold text-[#005323] dark:bg-emerald-950 dark:text-emerald-300">
                       {mode.badge}
                     </span>
                   </div>
-                  <p className="mt-1 text-base text-slate-600 dark:text-slate-300">
+                  <p className="mt-1 text-base text-[#3f493f] dark:text-slate-300">
                     {mode.subtitle}
                   </p>
                 </div>
               </div>
-              <ArrowRight className="h-6 w-6 shrink-0 text-slate-400 transition group-hover:translate-x-1 group-hover:text-[#15803D] dark:group-hover:text-emerald-400" />
+              <ArrowRight className="h-6 w-6 shrink-0 text-[#6f7a6e] transition group-hover:translate-x-1 group-hover:text-[#00652c] dark:group-hover:text-emerald-400" />
             </button>
           );
         })}
