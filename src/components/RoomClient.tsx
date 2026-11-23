@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
+import { GiftUnwrapBox } from "./GiftUnwrapBox";
 import { ValidationModal } from "./ValidationModal";
 import { readLocalGroups, upsertLocalGroup } from "@/lib/localHistory";
 import { formatBrPhoneInput, normalizeBrPhone } from "@/lib/phone";
@@ -90,6 +91,7 @@ export function RoomClient({ slug }: { slug: string }) {
   // Reveal state
   const [reveal, setReveal] = useState<RevealData | null>(null);
   const [loadingReveal, setLoadingReveal] = useState(false);
+  const [unwrapped, setUnwrapped] = useState(false);
   const [pushEnabled, setPushEnabled] = useState(false);
 
   useEffect(() => {
@@ -646,9 +648,13 @@ export function RoomClient({ slug }: { slug: string }) {
             </div>
           )}
 
-          {reveal && (
+          {reveal && !unwrapped && (
+            <GiftUnwrapBox onUnwrap={() => setUnwrapped(true)} />
+          )}
+
+          {reveal && unwrapped && (
             <>
-              <div className="space-y-4 rounded-3xl border-2 border-[#15803D] bg-white p-6 text-center shadow-lg dark:border-emerald-500 dark:bg-slate-900">
+              <div className="animate-gentle-rise space-y-4 rounded-3xl border-2 border-[#00652c] bg-white p-6 text-center shadow-lg dark:border-emerald-500 dark:bg-slate-900">
                 <p className="text-sm font-extrabold uppercase tracking-wider text-[#15803D] dark:text-emerald-400">
                   🤫 Segredo absoluto — Você tirou:
                 </p>

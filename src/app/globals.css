@@ -9,8 +9,8 @@
   }
 
   body {
-    background-color: #fafafa;
-    color: #0f172a;
+    background-color: #faf8ff;
+    color: #131b2e;
     font-size: 1rem;
     line-height: 1.6;
     overflow-x: hidden;
@@ -19,6 +19,12 @@
   html.dark body {
     background-color: #0f172a;
     color: #f8fafc;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-jakarta), var(--font-inter), sans-serif;
   }
 }
 
@@ -45,17 +51,21 @@
 
 @keyframes snow-drift {
   0% {
-    transform: translateY(-10vh) translateX(0px);
+    transform: translateY(-10vh) translateX(0px) rotate(0deg);
     opacity: 0;
   }
-  15% {
-    opacity: 0.7;
+  10% {
+    opacity: 0.85;
   }
-  85% {
-    opacity: 0.7;
+  50% {
+    transform: translateY(48vh) translateX(18px) rotate(180deg);
+    opacity: 0.75;
+  }
+  90% {
+    opacity: 0.85;
   }
   100% {
-    transform: translateY(105vh) translateX(18px);
+    transform: translateY(108vh) translateX(-10px) rotate(360deg);
     opacity: 0;
   }
 }
@@ -79,9 +89,24 @@
   animation: snow-drift linear infinite;
 }
 
+@keyframes gift-pulse {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.02);
+  }
+}
+
+.animate-gift-pulse {
+  animation: gift-pulse 2.6s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-gentle-rise,
   .animate-tree-sway,
+  .animate-gift-pulse,
   .snowflake {
     animation: none !important;
   }
