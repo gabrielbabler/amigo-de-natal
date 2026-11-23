@@ -1,0 +1,44 @@
+{
+  "name": "amigo-de-natal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Amigo de Natal - Organizador gratuito de Amigo Secreto, Amigo da Onça e Amigo Chocolate no Brasil.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:push": "drizzle-kit push"
+  },
+  "dependencies": {
+    "@google/genai": "^1.30.0",
+    "@types/three": "^0.187.0",
+    "drizzle-orm": "^0.44.7",
+    "lucide-react": "^0.554.0",
+    "next": "^16.0.3",
+    "postgres": "^3.4.7",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "three": "^0.187.0",
+    "web-push": "^3.6.7",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
+    "@types/node": "^22.19.1",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@types/web-push": "^3.6.4",
+    "drizzle-kit": "^0.31.7",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.17",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.13"
+  }
+}

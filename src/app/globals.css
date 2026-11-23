@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    font-size: 16px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: #fafafa;
+    color: #0f172a;
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  html.dark body {
+    background-color: #0f172a;
+    color: #f8fafc;
+  }
+}
+
+@keyframes gentle-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tree-sway {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes snow-drift {
+  0% {
+    transform: translateY(-10vh) translateX(0px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(105vh) translateX(18px);
+    opacity: 0;
+  }
+}
+
+.animate-gentle-rise {
+  animation: gentle-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.animate-tree-sway {
+  display: inline-block;
+  transform-origin: bottom center;
+  animation: tree-sway 4s ease-in-out infinite;
+}
+
+.snowflake {
+  position: fixed;
+  top: -5vh;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  animation: snow-drift linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-gentle-rise,
+  .animate-tree-sway,
+  .snowflake {
+    animation: none !important;
+  }
+}
