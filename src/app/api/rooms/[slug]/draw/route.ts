@@ -58,11 +58,9 @@ export async function POST(
       );
     }
 
-    const groupExclusions = group.chaosUnlocked
-      ? await db.query.exclusions.findMany({
-          where: eq(exclusions.groupId, group.id),
-        })
-      : [];
+    const groupExclusions = await db.query.exclusions.findMany({
+      where: eq(exclusions.groupId, group.id),
+    });
 
     const activeIds = activeParticipants.map((p) => p.id);
     const activeSet = new Set(activeIds);

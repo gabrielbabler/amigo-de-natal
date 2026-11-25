@@ -10,9 +10,9 @@ import {
   type VipGiftsPayload,
 } from "./types";
 
-const PRIMARY_MODEL = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
+const PRIMARY_MODEL = process.env.GEMINI_MODEL ?? "gemini-2.5-flash-lite";
 const FALLBACK_MODEL =
-  process.env.GEMINI_FALLBACK_MODEL ?? "gemini-2.5-flash-lite";
+  process.env.GEMINI_FALLBACK_MODEL ?? "gemini-2.5-flash";
 
 function getGeminiClient(): GoogleGenAI | null {
   const apiKey = process.env.GEMINI_API_KEY;

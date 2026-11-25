@@ -205,12 +205,6 @@ export async function PATCH(
   }
 
   if (cmd.action === "add_exclusion") {
-    if (!group.chaosUnlocked) {
-      return NextResponse.json(
-        { error: "Desbloqueie o Modo Caos IA para configurar restrições." },
-        { status: 403 }
-      );
-    }
     if (group.drawCompletedAt) {
       return NextResponse.json(
         { error: "Não é possível alterar restrições após o sorteio." },

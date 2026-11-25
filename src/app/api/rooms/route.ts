@@ -67,6 +67,7 @@ export async function POST(req: Request) {
           budgetCents,
           revealDate: data.revealDate,
           adminToken,
+          chaosUnlocked: true,
           expiresAt: getDefaultPostNewYearExpiry(),
         })
         .returning();

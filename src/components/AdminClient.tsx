@@ -17,7 +17,6 @@ import {
   UserMinus,
   UserPlus,
 } from "lucide-react";
-import { PixModal } from "./PixModal";
 import {
   readLocalGroups,
   removeLocalGroup,
@@ -70,7 +69,6 @@ export function AdminClient({
   const [actionError, setActionError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [copiedInvite, setCopiedInvite] = useState(false);
-  const [chaosModalOpen, setChaosModalOpen] = useState(false);
 
   // Exclusions form
   const [giverId, setGiverId] = useState("");
@@ -441,136 +439,108 @@ export function AdminClient({
         )}
       </section>
 
-      {/* Modo Caos IA Upgrade & Exclusions */}
+      {/* Modo Caos & Exclusions (100% Free) */}
       <section className="space-y-4 rounded-3xl border border-red-200 bg-white p-5 shadow-sm dark:border-red-900/60 dark:bg-slate-900">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 text-[#DC2626] dark:text-red-400">
             <Flame className="h-5 w-5" />
-            <h2 className="text-lg font-black">Modo Caos IA</h2>
+            <h2 className="text-lg font-black">Regras Anti-Casal & Modo Caos</h2>
           </div>
-          {data.group.chaosUnlocked && (
-            <span className="rounded-full bg-emerald-100 px-3 py-0.5 text-xs font-extrabold text-[#15803D] dark:bg-emerald-950 dark:text-emerald-300">
-              Desbloqueado
-            </span>
-          )}
+          <span className="rounded-full bg-emerald-100 px-3 py-0.5 text-xs font-extrabold text-[#15803D] dark:bg-emerald-950 dark:text-emerald-300">
+            Grátis
+          </span>
         </div>
 
-        {!data.group.chaosUnlocked ? (
-          <div className="space-y-3">
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-xs font-extrabold uppercase tracking-wide text-[#DC2626] dark:text-red-400">
-                Extra opcional para o grupo todo
-              </span>
-              <span className="rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-extrabold text-[#DC2626] dark:bg-red-950/60 dark:text-red-300">
-                R$ 14,90 (pagamento único)
-              </span>
-            </div>
-            <ul className="space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
-              <li>• Regras anti-casal (quem não pode tirar quem)</li>
-              <li>• Zoeira personalizada para cada participante revelado</li>
-              <li>• 3 pistas misteriosas + prenda secreta para a festa</li>
-            </ul>
-            <button
-              type="button"
-              onClick={() => setChaosModalOpen(true)}
-              className="flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#DC2626] px-5 text-base font-extrabold text-white shadow-md hover:bg-red-700"
-            >
-              <Flame className="h-5 w-5" />
-              <span>Ativar para o grupo todo (R$ 14,90 PIX)</span>
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">
-              Restrições anti-casal (quem não pode tirar quem):
-            </p>
+        <div className="space-y-3">
+          <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+            Restrições anti-casal (quem não pode tirar quem):
+          </p>
 
-            {!data.group.drawCompleted && activeParticipants.length >= 2 && (
-              <div className="flex flex-col gap-2 sm:flex-row">
-                <select
-                  value={giverId}
-                  onChange={(e) => setGiverId(e.target.value)}
-                  className="min-h-12 flex-1 rounded-xl border border-slate-300 bg-white px-3 text-base dark:border-slate-700 dark:bg-slate-800"
-                >
-                  <option value="">Quem...</option>
-                  {activeParticipants.map((p) => (
+          {!data.group.drawCompleted && activeParticipants.length >= 2 && (
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <select
+                value={giverId}
+                onChange={(e) => setGiverId(e.target.value)}
+                className="min-h-12 flex-1 rounded-xl border border-slate-300 bg-white px-3 text-base dark:border-slate-700 dark:bg-slate-800"
+              >
+                <option value="">Quem...</option>
+                {activeParticipants.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={excludedId}
+                onChange={(e) => setExcludedId(e.target.value)}
+                className="min-h-12 flex-1 rounded-xl border border-slate-300 bg-white px-3 text-base dark:border-slate-700 dark:bg-slate-800"
+              >
+                <option value="">Não pode tirar...</option>
+                {activeParticipants
+                  .filter((p) => p.id !== giverId)
+                  .map((p) => (
                     <option key={p.id} value={p.id}>
                       {p.name}
                     </option>
                   ))}
-                </select>
-                <select
-                  value={excludedId}
-                  onChange={(e) => setExcludedId(e.target.value)}
-                  className="min-h-12 flex-1 rounded-xl border border-slate-300 bg-white px-3 text-base dark:border-slate-700 dark:bg-slate-800"
-                >
-                  <option value="">Não pode tirar...</option>
-                  {activeParticipants
-                    .filter((p) => p.id !== giverId)
-                    .map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.name}
-                      </option>
-                    ))}
-                </select>
-                <button
-                  type="button"
-                  disabled={busy || !giverId || !excludedId}
-                  onClick={() =>
-                    void runAdminAction({
-                      action: "add_exclusion",
-                      giverId,
-                      excludedReceiverId: excludedId,
-                    })
-                  }
-                  className="inline-flex min-h-12 items-center justify-center gap-1 rounded-xl bg-[#15803D] px-4 text-sm font-bold text-white disabled:opacity-50"
-                >
-                  <Plus className="h-4 w-4" />
-                  <span>Bloquear</span>
-                </button>
-              </div>
-            )}
+              </select>
+              <button
+                type="button"
+                disabled={busy || !giverId || !excludedId}
+                onClick={() =>
+                  void runAdminAction({
+                    action: "add_exclusion",
+                    giverId,
+                    excludedReceiverId: excludedId,
+                  })
+                }
+                className="inline-flex min-h-12 items-center justify-center gap-1 rounded-xl bg-[#15803D] px-4 text-sm font-bold text-white disabled:opacity-50"
+              >
+                <Plus className="h-4 w-4" />
+                <span>Bloquear</span>
+              </button>
+            </div>
+          )}
 
-            {data.exclusions.length > 0 && (
-              <div className="space-y-2">
-                {data.exclusions.map((ex) => {
-                  const gName =
-                    data.participants.find((p) => p.id === ex.giverId)?.name ??
-                    "?";
-                  const rName =
-                    data.participants.find(
-                      (p) => p.id === ex.excludedReceiverId
-                    )?.name ?? "?";
-                  return (
-                    <div
-                      key={ex.id}
-                      className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-sm dark:bg-slate-800"
-                    >
-                      <span>
-                        <strong>{gName}</strong> não tira{" "}
-                        <strong>{rName}</strong>
-                      </span>
-                      {!data.group.drawCompleted && (
-                        <button
-                          type="button"
-                          onClick={() =>
-                            void runAdminAction({
-                              action: "remove_exclusion",
-                              exclusionId: ex.id,
-                            })
-                          }
-                          className="min-h-10 px-2 text-xs font-bold text-[#DC2626]"
-                        >
-                          Remover
-                        </button>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        )}
+          {data.exclusions.length > 0 && (
+            <div className="space-y-2">
+              {data.exclusions.map((ex) => {
+                const gName =
+                  data.participants.find((p) => p.id === ex.giverId)?.name ??
+                  "?";
+                const rName =
+                  data.participants.find(
+                    (p) => p.id === ex.excludedReceiverId
+                  )?.name ?? "?";
+                return (
+                  <div
+                    key={ex.id}
+                    className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-sm dark:bg-slate-800"
+                  >
+                    <span>
+                      <strong>{gName}</strong> não tira{" "}
+                      <strong>{rName}</strong>
+                    </span>
+                    {!data.group.drawCompleted && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          void runAdminAction({
+                            action: "remove_exclusion",
+                            exclusionId: ex.id,
+                          })
+                        }
+                        className="min-h-10 px-2 text-xs font-bold text-[#DC2626]"
+                      >
+                        Remover
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Participant Management */}
@@ -677,20 +647,6 @@ export function AdminClient({
           <span>Apagar grupo e dados agora</span>
         </button>
       </section>
-
-      <PixModal
-        open={chaosModalOpen}
-        onClose={() => setChaosModalOpen(false)}
-        onSuccess={() => {
-          setChaosModalOpen(false);
-          void fetchAdmin();
-        }}
-        title="Modo Caos IA (Grupo Todo)"
-        subtitle="Desbloqueia regras anti-casal + zoeiras, pistas e prendas por IA para todos."
-        slug={slug}
-        productType="CHAOS_MODE"
-        adminToken={getAdminToken()}
-      />
     </div>
   );
 }

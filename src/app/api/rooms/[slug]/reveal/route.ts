@@ -90,17 +90,14 @@ export async function GET(
       .where(eq(participants.id, giver.id));
   }
 
-  let chaos = null;
-  if (group.chaosUnlocked) {
-    chaos = await getOrCreateChaosReveal({
-      groupId: group.id,
-      giverId: giver.id,
-      receiverId: receiver.id,
-      receiverName: receiver.name,
-      mode: group.mode as GroupMode,
-      tags: receiver.tags,
-    });
-  }
+  const chaos = await getOrCreateChaosReveal({
+    groupId: group.id,
+    giverId: giver.id,
+    receiverId: receiver.id,
+    receiverName: receiver.name,
+    mode: group.mode as GroupMode,
+    tags: receiver.tags,
+  });
 
   const mode = group.mode as GroupMode;
   const searchTerms =
@@ -125,7 +122,7 @@ export async function GET(
       amazonUrl: buildAmazonSearchUrl(term, group.budgetCents),
       meliUrl: buildMercadoLivreSearchUrl(term, group.budgetCents),
     })),
-    chaosUnlocked: group.chaosUnlocked,
+    chaosUnlocked: true,
     chaos,
     vipUnlocked: giver.vipUnlocked,
   });
