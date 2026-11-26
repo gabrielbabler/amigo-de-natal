@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/db";
 import { groups, participants } from "@/db/schema";
-import { normalizeBrPhone, normalizeName } from "@/lib/phone";
+import {
+  getPhoneLast4,
+  hashPhone,
+  normalizeBrPhone,
+  normalizeName,
+} from "@/lib/phone";
 import { hashPin, isValidPin } from "@/lib/pin";
 import {
   adminCookieName,
@@ -78,7 +83,8 @@ export async function POST(req: Request) {
           groupId: group.id,
           name: data.organizerName,
           normalizedName: normalizeName(data.organizerName),
-          normalizedPhone,
+          phoneHmac: hashPhone(normalizedPhone),
+          phoneLast4: getPhoneLast4(normalizedPhone),
           pinHash,
           participantToken,
           tags: data.organizerTags,

@@ -5,6 +5,8 @@ import { db } from "@/db";
 import { groups, participants } from "@/db/schema";
 import {
   areNamesSimilar,
+  getPhoneLast4,
+  hashPhone,
   normalizeBrPhone,
   normalizeName,
 } from "@/lib/phone";
@@ -71,11 +73,13 @@ export async function POST(
       );
     }
 
-    // Layer 2: Check UNIQUE(group_id, normalized_phone)
+    const phoneHmac = hashPhone(normalizedPhone);
+
+    // Layer 2: Check UNIQUE(group_id, phone_hmac)
     const existingByPhone = await db.query.participants.findFirst({
       where: and(
         eq(participants.groupId, group.id),
-        eq(participants.normalizedPhone, normalizedPhone)
+        eq(participants.phoneHmac, phoneHmac)
       ),
     });
 
@@ -234,7 +238,8 @@ export async function POST(
         groupId: group.id,
         name: cleanName,
         normalizedName: normalizeName(cleanName),
-        normalizedPhone,
+        phoneHmac,
+        phoneLast4: getPhoneLast4(normalizedPhone),
         pinHash,
         participantToken,
         tags: data.tags,

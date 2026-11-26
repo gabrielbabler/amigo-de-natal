@@ -41,7 +41,7 @@ export default function HomePage() {
                 Links prontos na faixa de preço:
               </strong>{" "}
               ao revelar seu amigo secreto, você já recebe links diretos na
-              Amazon e Mercado Livre filtrados dentro do orçamento do grupo.
+              Amazon filtrados dentro do orçamento do grupo.
             </span>
           </li>
           <li className="flex items-start gap-3">

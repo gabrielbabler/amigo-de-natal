@@ -15,6 +15,13 @@
       "when": 1795468880669,
       "tag": "0001_melodic_ken_ellis",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795715400000,
+      "tag": "0002_phone_hmac",
+      "breakpoints": true
     }
   ]
 }

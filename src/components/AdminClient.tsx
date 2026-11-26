@@ -40,7 +40,6 @@ interface AdminState {
     id: string;
     name: string;
     maskedPhone: string;
-    rawPhone: string;
     tags: string[];
     isOrganizer: boolean;
     isParticipating: boolean;
@@ -586,7 +585,7 @@ export function AdminClient({
                   p.isParticipating &&
                   !p.revealedAt && (
                     <a
-                      href={`https://wa.me/${p.rawPhone}?text=${encodeURIComponent(
+                      href={`https://wa.me/?text=${encodeURIComponent(
                         `Oi ${p.name}! 🎄 O sorteio do ${data.group.name} já saiu! Veja quem você tirou: ${inviteUrl}`
                       )}`}
                       target="_blank"
@@ -594,7 +593,7 @@ export function AdminClient({
                       className="inline-flex min-h-10 items-center gap-1 rounded-xl bg-emerald-50 px-3 text-xs font-bold text-[#15803D] dark:bg-emerald-950/60 dark:text-emerald-300"
                     >
                       <MessageCircle className="h-3.5 w-3.5" />
-                      <span>Cobrar no WhatsApp</span>
+                      <span>Lembrar no WhatsApp</span>
                     </a>
                   )}
 

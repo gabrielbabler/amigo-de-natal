@@ -753,30 +753,16 @@ export function RoomClient({ slug }: { slug: string }) {
                         <p className="mb-2 text-sm font-bold text-slate-800 dark:text-slate-100">
                           {link.label}
                         </p>
-                        <div className="grid grid-cols-2 gap-2">
-                          <a
-                            href={link.amazonUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() => trackEvent("AFFILIATE_CLICK", "amazon")}
-                            className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-3 text-xs font-bold text-white dark:bg-slate-700"
-                          >
-                            <span>Ver na Amazon</span>
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </a>
-                          <a
-                            href={link.meliUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() =>
-                              trackEvent("AFFILIATE_CLICK", "mercadolivre")
-                            }
-                            className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-amber-400 px-3 text-xs font-extrabold text-slate-950"
-                          >
-                            <span>Mercado Livre</span>
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </a>
-                        </div>
+                        <a
+                          href={link.amazonUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => trackEvent("AFFILIATE_CLICK", "amazon")}
+                          className="inline-flex min-h-11 w-full items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-3 text-sm font-bold text-white transition hover:bg-slate-800 dark:bg-slate-700"
+                        >
+                          <span>Ver opções na Amazon</span>
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
                       </div>
                     ))}
                   </div>

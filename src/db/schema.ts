@@ -63,7 +63,8 @@ export const participants = pgTable(
       .references(() => groups.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
     normalizedName: text("normalized_name").notNull(),
-    normalizedPhone: text("normalized_phone").notNull(),
+    phoneHmac: text("phone_hmac").notNull(),
+    phoneLast4: text("phone_last4").notNull(),
     pinHash: text("pin_hash"),
     pinAttempts: integer("pin_attempts").default(0).notNull(),
     pinLockedUntil: timestamp("pin_locked_until", { withTimezone: true }),
@@ -82,12 +83,9 @@ export const participants = pgTable(
       .notNull(),
   },
   (t) => [
-    uniqueIndex("participants_group_phone_uidx").on(
-      t.groupId,
-      t.normalizedPhone
-    ),
+    uniqueIndex("participants_group_phone_uidx").on(t.groupId, t.phoneHmac),
     uniqueIndex("participants_token_uidx").on(t.participantToken),
-    index("participants_phone_idx").on(t.normalizedPhone),
+    index("participants_phone_idx").on(t.phoneHmac),
     index("participants_group_idx").on(t.groupId),
   ]
 );

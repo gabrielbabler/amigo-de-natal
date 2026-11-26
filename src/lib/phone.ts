@@ -2,6 +2,11 @@
  * Normalizes a Brazilian WhatsApp phone number to E.164-like digits without "+" (e.g., "5511999999999").
  * Accepts inputs like "(11) 99999-9999", "+55 11 99999-9999", "11 9999-9999", etc.
  */
+import { createHmac } from "node:crypto";
+
+const PHONE_PEPPER =
+  process.env.PIN_PEPPER ?? "dev-amigo-de-natal-pepper";
+
 const VALID_BR_DDDS = new Set([
   11, 12, 13, 14, 15, 16, 17, 18, 19,
   21, 22, 24, 27, 28,
@@ -81,12 +86,26 @@ export function formatBrPhone(normalized: string): string {
   return normalized;
 }
 
-export function maskBrPhone(normalized: string): string {
-  const national = normalized.startsWith("55") ? normalized.slice(2) : normalized;
-  if (national.length >= 10) {
-    return `(${national.slice(0, 2)}) •••••-${national.slice(-4)}`;
+export function maskBrPhone(normalizedOrLast4: string): string {
+  const last4 = normalizedOrLast4.slice(-4);
+  if (last4.length === 4) {
+    return `•••••-${last4}`;
   }
   return "••••";
+}
+
+/**
+ * Computes a deterministic, non-reversible HMAC-SHA256 blind index for a normalized phone number.
+ * Zero plaintext phone numbers are persisted in PostgreSQL.
+ */
+export function hashPhone(normalizedPhone: string): string {
+  return createHmac("sha256", PHONE_PEPPER)
+    .update(normalizedPhone)
+    .digest("hex");
+}
+
+export function getPhoneLast4(normalizedPhone: string): string {
+  return normalizedPhone.slice(-4);
 }
 
 /**

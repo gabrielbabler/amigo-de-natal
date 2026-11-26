@@ -74,8 +74,7 @@ export async function GET(
     participants: groupParticipants.map((p) => ({
       id: p.id,
       name: p.name,
-      maskedPhone: maskBrPhone(p.normalizedPhone),
-      rawPhone: p.normalizedPhone,
+      maskedPhone: maskBrPhone(p.phoneLast4),
       tags: p.tags,
       isOrganizer: p.isOrganizer,
       isParticipating: p.isParticipating,

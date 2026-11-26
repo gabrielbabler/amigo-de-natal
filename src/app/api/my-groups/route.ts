@@ -3,7 +3,7 @@ import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/db";
 import { groups, participants } from "@/db/schema";
-import { normalizeBrPhone } from "@/lib/phone";
+import { hashPhone, normalizeBrPhone } from "@/lib/phone";
 import {
   isPinLocked,
   isValidPin,
@@ -47,6 +47,7 @@ export async function POST(req: Request) {
       );
     }
 
+    const phoneHmac = hashPhone(normalizedPhone);
     const rows = await db
       .select({
         participant: participants,
@@ -54,7 +55,7 @@ export async function POST(req: Request) {
       })
       .from(participants)
       .innerJoin(groups, eq(participants.groupId, groups.id))
-      .where(eq(participants.normalizedPhone, normalizedPhone))
+      .where(eq(participants.phoneHmac, phoneHmac))
       .orderBy(desc(groups.createdAt));
 
     const matched: Array<{

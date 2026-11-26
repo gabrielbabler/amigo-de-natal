@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { Footer } from "@/components/Footer";
@@ -68,6 +69,13 @@ export default function RootLayout({
       className={`${inter.variable} ${plusJakarta.variable}`}
     >
       <body className={`${inter.className} min-h-screen antialiased`}>
+        <Script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="3154a222-d810-4eb9-93ff-c8e0f0c5a516"
+          data-blockingmode="auto"
+          strategy="beforeInteractive"
+        />
         <ThemeProvider>
           <AnalyticsTracker />
           <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-20 overflow-hidden">

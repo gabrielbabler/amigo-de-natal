@@ -4,6 +4,8 @@ import {
   areNamesSimilar,
   formatBrPhone,
   formatBrPhoneInput,
+  getPhoneLast4,
+  hashPhone,
   normalizeBrPhone,
 } from "../phone";
 import { hashPin, nextPinFailureState, verifyPin } from "../pin";
@@ -62,6 +64,16 @@ describe("phone & fuzzy name utilities", () => {
 
   it("formats normalized phone numbers", () => {
     expect(formatBrPhone("5511999998888")).toBe("(11) 99999-8888");
+  });
+
+  it("hashes phone numbers deterministically without storing plaintext", () => {
+    const h1 = hashPhone("5511987654321");
+    const h2 = hashPhone("5511987654321");
+    const h3 = hashPhone("5511987654322");
+    expect(h1).toBe(h2);
+    expect(h1).not.toBe(h3);
+    expect(h1).not.toContain("987654321");
+    expect(getPhoneLast4("5511987654321")).toBe("4321");
   });
 
   it("detects similar names ignoring accents and case", () => {

@@ -18,6 +18,11 @@ export function buildMercadoLivreSearchUrl(
   searchQuery: string,
   maxPriceCents?: number
 ): string {
+  const signedSocialUrl = process.env.NEXT_PUBLIC_MELI_SOCIAL_URL;
+  if (signedSocialUrl) {
+    return signedSocialUrl;
+  }
+
   const meliTag = process.env.NEXT_PUBLIC_MELI_TAG ?? "";
   const slug = encodeURIComponent(searchQuery.trim().replace(/\s+/g, "-"));
   const priceSuffix =
